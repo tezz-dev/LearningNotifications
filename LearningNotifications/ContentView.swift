@@ -52,14 +52,18 @@ struct ContentView: View {
         content.title = "The title"
         content.body = "The content"
         
-        let date = Date().addingTimeInterval(5)
-        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .weekday, .weekdayOrdinal, .timeZone, .hour, .minute, .second], from: date)
         
-        print(Calendar.current.dateComponents([.year, .month, .day, .weekday, .weekdayOrdinal, .timeZone, .hour, .minute, .second], from: Date()))
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.weekday = 5
+        dateComponents.hour = 20
+        dateComponents.minute = 19
+        
+        print(Calendar.current.dateComponents([.weekday, .hour, .minute], from: Date()))
         print(dateComponents)
         
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         center.add(request) { (error) in
